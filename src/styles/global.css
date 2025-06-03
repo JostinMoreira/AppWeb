@@ -200,3 +200,25 @@ body {
   .profile-header { flex-direction: column; gap: 0.5rem;}
   .profile-stats { gap: 0.7rem;}
 }
+
+.post-card {
+  margin-bottom: 1.2rem;
+  padding: 1rem;
+  border-left: 4px solid var(--accent);
+  background: rgba(255,255,255,0.18);
+}
+.post-type {
+  background: var(--accent2);
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.9rem;
+  margin-right: 0.5rem;
+}
+.post-meta {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-light);
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}

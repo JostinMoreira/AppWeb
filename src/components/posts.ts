@@ -1,5 +1,5 @@
 import { db, auth } from '../firebase';
-import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import { collection, addDoc, Timestamp, query, orderBy, getDocs } from 'firebase/firestore';
 
 export function renderPosts(container: HTMLElement) {
   container.innerHTML = `
@@ -20,11 +20,43 @@ export function renderPosts(container: HTMLElement) {
         </label>
         <button type="submit">Publicar</button>
       </form>
+      <hr>
+      <h2>Publicaciones recientes</h2>
       <div id="posts-list"></div>
     </div>
   `;
 
   const postForm = document.getElementById('postForm') as HTMLFormElement;
+  const postsList = document.getElementById('posts-list') as HTMLElement;
+
+  // Función para cargar y mostrar publicaciones
+  async function loadPosts() {
+    postsList.innerHTML = '<p>Cargando publicaciones...</p>';
+    const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+    const querySnapshot = await getDocs(q);
+    if (querySnapshot.empty) {
+      postsList.innerHTML = '<p>No hay publicaciones aún.</p>';
+      return;
+    }
+    postsList.innerHTML = '';
+    querySnapshot.forEach((docSnap) => {
+      const post = docSnap.data();
+      const date = post.createdAt?.toDate ? post.createdAt.toDate().toLocaleString() : '';
+      postsList.innerHTML += `
+        <div class="post-card glass">
+          <h3>${post.title}</h3>
+          <p>${post.desc}</p>
+          <span class="post-type">${post.type}</span>
+          <div class="post-meta">
+            <small>${post.anonymous ? 'Anónimo' : (post.author || 'Desconocido')}</small>
+            <small>${date}</small>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  // Publicar nueva publicación
   postForm.onsubmit = async (e) => {
     e.preventDefault();
     const title = (document.getElementById('post-title') as HTMLInputElement).value;
@@ -39,13 +71,17 @@ export function renderPosts(container: HTMLElement) {
         desc,
         type,
         anonymous,
-        author: anonymous ? null : user.uid,
+        author: anonymous ? null : user.email,
         createdAt: Timestamp.now()
       });
       (window as any).showNotification('¡Publicado!', 'success');
       postForm.reset();
+      loadPosts(); // Recarga la lista después de publicar
     } catch (err: any) {
       (window as any).showNotification('Error al publicar', 'error');
     }
   };
+
+  // Cargar publicaciones al iniciar
+  loadPosts();
 }
