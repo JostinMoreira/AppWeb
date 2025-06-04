@@ -39,7 +39,6 @@ function renderApp() {
   nav.profile.onclick = () => renderProfile(mainView, () => nav.auth.click());
   nav.posts.onclick = () => renderPosts(mainView);
   nav.stats.onclick = () => renderStats(mainView);
-  // Por defecto, mostrar login
   nav.auth.click();
 }
 renderApp();
