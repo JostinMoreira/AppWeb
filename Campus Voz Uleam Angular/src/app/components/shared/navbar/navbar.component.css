@@ -1,34 +1,32 @@
 .navbar {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 0; left: 0; right: 0;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255,255,255,0.95);
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  min-height: 80px; /* Asegurar altura mínima */
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  min-height: 80px;
 }
 
 .nav-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem; /* Aumentar padding */
+  padding: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 80px; /* Altura mínima consistente */
+  min-height: 80px;
 }
 
 .nav-brand {
   font-size: 1.5rem;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  line-height: 1.2; /* Mejorar line-height */
+  line-height: 1.2;
 }
 
 .brand-link {
@@ -36,46 +34,42 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem 0; /* Padding vertical */
+  padding: 0.5rem 0;
 }
 
 .nav-menu {
   display: flex;
   align-items: center;
-  gap: 1.5rem; /* Reducir gap ligeramente */
-  height: 100%; /* Ocupar toda la altura */
+  gap: 1.5rem;
+  height: 100%;
 }
 
 .nav-link {
   text-decoration: none;
   color: var(--gray-700);
   font-weight: 500;
-  padding: 0.75rem 1rem; /* Aumentar padding vertical */
+  padding: 0.75rem 1rem;
   border-radius: var(--radius-lg);
   transition: all 0.2s ease;
   position: relative;
-  white-space: nowrap; /* Evitar que el texto se corte */
+  white-space: nowrap;
   line-height: 1.2;
   display: flex;
   align-items: center;
-  min-height: 44px; /* Altura mínima para touch targets */
+  min-height: 44px;
 }
 
-.nav-link:hover {
-  color: var(--primary);
-  background: rgba(102, 126, 234, 0.1);
-}
-
+.nav-link:hover,
 .nav-link.active {
   color: var(--primary);
-  background: rgba(102, 126, 234, 0.1);
+  background: rgba(102,126,234,0.1);
 }
 
 .nav-link.btn-primary {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #fff;
   font-weight: 600;
-  font-size: 0.875rem; /* Tamaño de fuente consistente */
+  font-size: 0.875rem;
 }
 
 .nav-link.btn-primary:hover {
@@ -98,35 +92,34 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: white;
+  background: #fff;
   border: 2px solid var(--gray-200);
   border-radius: var(--radius-xl);
-  padding: 0.75rem 1rem; /* Aumentar padding */
+  padding: 0.75rem 1rem;
   cursor: pointer;
   transition: all 0.2s ease;
   font-weight: 500;
   color: var(--gray-700);
-  min-height: 44px; /* Altura mínima */
+  min-height: 44px;
   white-space: nowrap;
 }
 
 .user-button:hover {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
 }
 
 .user-avatar {
-  width: 32px;
-  height: 32px;
+  width: 32px; height: 32px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #fff;
   font-weight: 600;
   font-size: 0.875rem;
-  flex-shrink: 0; /* No permitir que se encoja */
+  flex-shrink: 0;
 }
 
 .dropdown-arrow {
@@ -142,7 +135,7 @@
   position: absolute;
   top: calc(100% + 0.5rem);
   right: 0;
-  background: white;
+  background: #fff;
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-xl);
   border: 1px solid var(--gray-200);
@@ -219,14 +212,12 @@
 
 @media (max-width: 1024px) {
   .nav-menu {
-    gap: 1rem; /* Reducir gap en tablets */
+    gap: 1rem;
   }
-
   .nav-link {
-    padding: 0.5rem 0.75rem; /* Reducir padding en tablets */
+    padding: 0.5rem 0.75rem;
     font-size: 0.875rem;
   }
-
   .nav-link.btn-primary {
     font-size: 0.8rem;
   }
@@ -234,20 +225,16 @@
 
 @media (max-width: 768px) {
   .navbar {
-    min-height: 70px; /* Altura menor en móvil */
+    min-height: 70px;
   }
-
   .nav-container {
     min-height: 70px;
     padding: 0.75rem 1rem;
   }
-
   .nav-menu {
     position: fixed;
-    top: 70px; /* Ajustar según nueva altura */
-    left: 0;
-    right: 0;
-    background: rgba(255, 255, 255, 0.95);
+    top: 70px; left: 0; right: 0;
+    background: rgba(255,255,255,0.95);
     backdrop-filter: blur(20px);
     flex-direction: column;
     padding: 2rem;
@@ -258,23 +245,19 @@
     transition: all 0.3s ease;
     min-height: auto;
   }
-
   .nav-menu.active {
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
   }
-
   .menu-toggle {
     display: flex;
   }
-
   .user-menu {
     flex-direction: column;
     width: 100%;
     gap: 1rem;
   }
-
   .dropdown-menu {
     position: static;
     opacity: 1;
@@ -284,7 +267,6 @@
     border: 1px solid var(--gray-200);
     margin-top: 1rem;
   }
-
   .nav-link {
     justify-content: center;
     width: 100%;
@@ -293,9 +275,8 @@
 
 @media (max-width: 480px) {
   .nav-brand {
-    font-size: 1.25rem; /* Reducir tamaño en móviles pequeños */
+    font-size: 1.25rem;
   }
-
   .nav-link.btn-primary {
     font-size: 0.75rem;
     padding: 0.5rem 0.75rem;
