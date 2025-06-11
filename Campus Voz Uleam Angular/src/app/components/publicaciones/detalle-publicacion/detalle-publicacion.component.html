@@ -1,0 +1,51 @@
+<div class="detalle-container" *ngIf="publicacion">
+  <div class="detalle-card">
+    <div class="card-header">
+      <span class="tipo-badge" [ngClass]="'tipo-' + publicacion.tipo">
+        {{ getTipoLabel(publicacion.tipo) }}
+      </span>
+      <span class="estado-badge" [ngClass]="'estado-' + publicacion.estado">
+        {{ getEstadoLabel(publicacion.estado) }}
+      </span>
+    </div>
+
+    <h1 class="titulo">{{ publicacion.titulo }}</h1>
+    
+    <div class="meta-info">
+      <span class="autor">Por: {{ publicacion.autorNombre }}</span>
+      <span class="fecha">{{ publicacion.fechaCreacion | date:'medium' }}</span>
+    </div>
+
+    <div class="contenido">
+      <p>{{ publicacion.contenido }}</p>
+    </div>
+
+    <div class="acciones">
+      <app-votos 
+        [publicacionId]="publicacion.id"
+        [votosPositivos]="publicacion.votosPositivos"
+        [votosNegativos]="publicacion.votosNegativos">
+      </app-votos>
+      
+      <div class="botones" *ngIf="esAutor || esAdmin">
+        <button class="btn btn-outline" [routerLink]="['/editar-publicacion', publicacion.id]">
+          ✏️ Editar
+        </button>
+        <button class="btn btn-danger" (click)="eliminarPublicacion()">
+          🗑️ Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <app-comentarios [publicacionId]="publicacion.id"></app-comentarios>
+</div>
+
+<div class="loading" *ngIf="loading">
+  <p>Cargando publicación...</p>
+</div>
+
+<div class="error-message" *ngIf="error">
+  <p>{{ error }}</p>
+  <button class="btn btn-primary" routerLink="/publicaciones">Volver a publicaciones</button>
+</div>

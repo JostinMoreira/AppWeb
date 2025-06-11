@@ -1,0 +1,66 @@
+<div class="publicaciones-container">
+  <div class="header">
+    <h2>Publicaciones de Campus Voz</h2>
+    <button class="btn btn-primary" routerLink="/nueva-publicacion">
+      ➕ Nueva Publicación
+    </button>
+  </div>
+
+  <div class="filtros">
+    <select [(ngModel)]="filtroTipo" (change)="aplicarFiltros()" class="form-control">
+      <option value="">Todos los tipos</option>
+      <option value="queja">Quejas</option>
+      <option value="propuesta">Propuestas</option>
+      <option value="sugerencia">Sugerencias</option>
+      <option value="idea">Ideas</option>
+    </select>
+
+    <select [(ngModel)]="filtroEstado" (change)="aplicarFiltros()" class="form-control">
+      <option value="">Todos los estados</option>
+      <option value="pendiente">Pendientes</option>
+      <option value="en_revision">En Revisión</option>
+      <option value="aprobada">Aprobadas</option>
+      <option value="rechazada">Rechazadas</option>
+    </select>
+  </div>
+
+  <div class="publicaciones-grid" *ngIf="publicacionesFiltradas.length > 0">
+    <div class="publicacion-card" *ngFor="let publicacion of publicacionesFiltradas">
+      <div class="card-header">
+        <span class="tipo-badge" [ngClass]="'tipo-' + publicacion.tipo">
+          {{ getTipoLabel(publicacion.tipo) }}
+        </span>
+        <span class="estado-badge" [ngClass]="'estado-' + publicacion.estado">
+          {{ getEstadoLabel(publicacion.estado) }}
+        </span>
+      </div>
+
+      <h3 class="titulo">{{ publicacion.titulo }}</h3>
+      <p class="contenido">{{ publicacion.contenido | slice:0:150 }}...</p>
+
+      <div class="card-meta">
+        <span class="autor">Por: {{ publicacion.autorNombre }}</span>
+        <span class="fecha">{{ publicacion.fechaCreacion | date:'short' }}</span>
+      </div>
+
+      <div class="card-actions">
+        <app-votos 
+          [publicacionId]="publicacion.id"
+          [votosPositivos]="publicacion.votosPositivos"
+          [votosNegativos]="publicacion.votosNegativos">
+        </app-votos>
+        
+        <button class="btn btn-outline" [routerLink]="['/publicacion', publicacion.id]">
+          💬 {{ publicacion.totalComentarios }} comentarios
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="empty-state" *ngIf="publicacionesFiltradas.length === 0">
+    <p>No hay publicaciones que mostrar</p>
+    <button class="btn btn-primary" routerLink="/nueva-publicacion">
+      Crear la primera publicación
+    </button>
+  </div>
+</div>

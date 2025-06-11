@@ -1,0 +1,54 @@
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <a routerLink="/" class="brand-link">
+        🎓 Campus Voz
+      </a>
+    </div>
+
+    <div class="nav-menu" [class.active]="menuAbierto">
+      <a routerLink="/" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        🏠 Inicio
+      </a>
+      <a routerLink="/publicaciones" class="nav-link" routerLinkActive="active">
+        📝 Publicaciones
+      </a>
+      
+      <div *ngIf="usuario; else loginLinks" class="user-menu">
+        <a routerLink="/nueva-publicacion" class="nav-link btn-primary">
+          ➕ Nueva
+        </a>
+        <div class="dropdown">
+          <button class="user-button" (click)="toggleMenu()">
+            <div class="user-avatar">{{ usuario.nombre.charAt(0).toUpperCase() }}</div>
+            <span>{{ usuario.nombre }}</span>
+            <span class="dropdown-arrow">▼</span>
+          </button>
+          <div class="dropdown-menu" [class.show]="menuAbierto">
+            <a routerLink="/perfil" class="dropdown-item" (click)="toggleMenu()">
+              👤 Mi Perfil
+            </a>
+            <button class="dropdown-item logout-btn" (click)="logout()">
+              🚪 Cerrar Sesión
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #loginLinks>
+        <a routerLink="/login" class="nav-link" routerLinkActive="active">
+          🔑 Iniciar Sesión
+        </a>
+        <a routerLink="/register" class="nav-link btn-primary" routerLinkActive="active">
+          📝 Registrarse
+        </a>
+      </ng-template>
+    </div>
+
+    <button class="menu-toggle" (click)="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>

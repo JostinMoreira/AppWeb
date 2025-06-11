@@ -1,0 +1,60 @@
+<div class="hero">
+  <div class="hero-content">
+    <h1>🎓 Bienvenido a Campus Voz</h1>
+    <p>La plataforma donde tu voz estudiantil importa. Comparte ideas, propuestas y participa en la mejora de tu universidad.</p>
+    <div class="hero-buttons">
+      <a routerLink="/publicaciones" class="btn btn-primary">
+        📝 Ver Publicaciones
+      </a>
+      <a routerLink="/register" class="btn btn-outline" *ngIf="!usuario">
+        🚀 Únete Ahora
+      </a>
+      <a routerLink="/nueva-publicacion" class="btn btn-outline" *ngIf="usuario">
+        ✨ Crear Publicación
+      </a>
+    </div>
+  </div>
+</div>
+
+<section class="features">
+  <div class="features-grid">
+    <div class="feature-card animate-fade-in">
+      <div class="feature-icon">💡</div>
+      <h3>Comparte Ideas</h3>
+      <p>Expresa tus ideas y propuestas para mejorar la experiencia universitaria de todos los estudiantes.</p>
+    </div>
+    
+    <div class="feature-card animate-fade-in">
+      <div class="feature-icon">🗳️</div>
+      <h3>Vota y Participa</h3>
+      <p>Apoya las mejores propuestas con tu voto y ayuda a que las ideas más populares lleguen a las autoridades.</p>
+    </div>
+    
+    <div class="feature-card animate-fade-in">
+      <div class="feature-icon">💬</div>
+      <h3>Debate Constructivo</h3>
+      <p>Participa en discusiones constructivas y enriquece las propuestas con tus comentarios y sugerencias.</p>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <h3>{{ estadisticas.totalPublicaciones }}</h3>
+      <p>Publicaciones Creadas</p>
+    </div>
+    <div class="stat-item">
+      <h3>{{ estadisticas.totalUsuarios }}</h3>
+      <p>Estudiantes Activos</p>
+    </div>
+    <div class="stat-item">
+      <h3>{{ estadisticas.totalVotos }}</h3>
+      <p>Votos Emitidos</p>
+    </div>
+    <div class="stat-item">
+      <h3>{{ estadisticas.totalComentarios }}</h3>
+      <p>Comentarios</p>
+    </div>
+  </div>
+</section>

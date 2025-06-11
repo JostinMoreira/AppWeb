@@ -1,0 +1,92 @@
+<div class="lista-publicaciones-container">
+  <div class="header">
+    <h1>Campus Voz - Publicaciones</h1>
+    <button 
+      class="btn btn-primary"
+      routerLink="/publicaciones/nueva"
+      *ngIf="authService.user$ | async">
+      Nueva Publicación
+    </button>
+  </div>
+
+  <div class="filtros">
+    <div class="filtro-grupo">
+      <label for="busqueda">Buscar:</label>
+      <input 
+        id="busqueda"
+        type="text" 
+        placeholder="Buscar por título o contenido..."
+        (input)="onBusquedaChange($event.target.value)"
+        class="input-busqueda">
+    </div>
+
+    <div class="filtro-grupo">
+      <label for="tipo">Tipo:</label>
+      <select 
+        id="tipo"
+        (change)="onFiltroTipoChange($event.target.value)"
+        class="select-filtro">
+        <option value="">Todos los tipos</option>
+        <option *ngFor="let tipo of tiposPublicacion" [value]="tipo">
+          {{ getTipoLabel(tipo) }}
+        </option>
+      </select>
+    </div>
+
+    <div class="filtro-grupo">
+      <label for="estado">Estado:</label>
+      <select 
+        id="estado"
+        (change)="onFiltroEstadoChange($event.target.value)"
+        class="select-filtro">
+        <option value="">Todos los estados</option>
+        <option *ngFor="let estado of estadosPublicacion" [value]="estado">
+          {{ getEstadoLabel(estado) }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="publicaciones-grid">
+    <div 
+      *ngFor="let publicacion of publicaciones$ | async; trackBy: trackByPublicacion"
+      class="publicacion-card"
+      [routerLink]="['/publicaciones', publicacion.id]">
+      
+      <div class="publicacion-header">
+        <h3>{{ publicacion.titulo }}</h3>
+        <div class="badges">
+          <span class="badge badge-tipo">{{ getTipoLabel(publicacion.tipo) }}</span>
+          <span class="badge badge-estado" [ngClass]="getEstadoClass(publicacion.estado)">
+            {{ getEstadoLabel(publicacion.estado) }}
+          </span>
+        </div>
+      </div>
+
+      <p class="publicacion-contenido">{{ publicacion.contenido | slice:0:200 }}...</p>
+
+      <div class="publicacion-meta">
+        <div class="autor">
+          <strong>{{ publicacion.autorNombre }}</strong>
+        </div>
+        <div class="fecha">
+          {{ publicacion.fechaCreacion.toDate() | date:'dd/MM/yyyy HH:mm' }}
+        </div>
+      </div>
+
+      <div class="publicacion-stats">
+        <div class="votos">
+          <span class="votos-positivos">👍 {{ publicacion.votosPositivos }}</span>
+          <span class="votos-negativos">👎 {{ publicacion.votosNegativos }}</span>
+        </div>
+        <div class="comentarios">
+          💬 {{ publicacion.totalComentarios }} comentarios
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="(publicaciones$ | async)?.length === 0" class="no-publicaciones">
+    <p>No se encontraron publicaciones con los filtros seleccionados.</p>
+  </div>
+</div>

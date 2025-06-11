@@ -1,0 +1,30 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Reglas para usuarios
+    match /usuarios/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      allow read: if request.auth != null;
+    }
+    
+    // Reglas para publicaciones - TEMPORALMENTE MÁS PERMISIVAS PARA DEBUGGING
+    match /publicaciones/{publicacionId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow update, delete: if request.auth != null;
+    }
+    
+    // Reglas para comentarios
+    match /comentarios/{comentarioId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow delete: if request.auth != null;
+    }
+    
+    // Reglas para votos
+    match /votos/{votoId} {
+      allow read, write: if request.auth != null;
+      allow create: if request.auth != null;
+    }
+  }
+}

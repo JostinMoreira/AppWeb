@@ -1,0 +1,148 @@
+<div class="perfil-container" *ngIf="usuario">
+  <div class="perfil-header">
+    <div class="avatar">
+      <div class="avatar-circle">
+        {{ usuario.nombre.charAt(0).toUpperCase() }}
+      </div>
+    </div>
+    <div class="info-basica">
+      <h1>{{ usuario.nombre }}</h1>
+      <p class="rol">{{ getRolLabel(usuario.rol) }}</p>
+      <p class="fecha-registro">
+        Miembro desde {{ usuario.fechaRegistro | date:'MMMM yyyy' }}
+      </p>
+    </div>
+  </div>
+
+  <div class="perfil-stats">
+    <div class="stat-card">
+      <div class="stat-number">{{ misPublicaciones.length }}</div>
+      <div class="stat-label">Publicaciones</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">{{ getVotosPositivos() }}</div>
+      <div class="stat-label">Votos Positivos</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">{{ getTotalVotos() }}</div>
+      <div class="stat-label">Total Votos</div>
+    </div>
+  </div>
+
+  <div class="perfil-content">
+    <!-- Información Personal -->
+    <div class="section-card">
+      <div class="section-header">
+        <h2>Información Personal</h2>
+        <button 
+          class="btn btn-outline" 
+          *ngIf="!editando"
+          (click)="iniciarEdicion()">
+          ✏️ Editar
+        </button>
+      </div>
+
+      <div *ngIf="!editando" class="info-display">
+        <div class="info-item">
+          <label>Nombre:</label>
+          <span>{{ usuario.nombre }}</span>
+        </div>
+        <div class="info-item">
+          <label>Email:</label>
+          <span>{{ usuario.email }}</span>
+        </div>
+        <div class="info-item">
+          <label>Rol:</label>
+          <span>{{ getRolLabel(usuario.rol) }}</span>
+        </div>
+      </div>
+
+      <form *ngIf="editando" (ngSubmit)="guardarCambios()" #perfilForm="ngForm">
+        <div class="form-group">
+          <label for="nombre">Nombre *</label>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            [(ngModel)]="datosEdicion.nombre"
+            required
+            class="form-control"
+            [disabled]="loading">
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="datosEdicion.email"
+            required
+            class="form-control"
+            [disabled]="loading">
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="cancelarEdicion()"
+            [disabled]="loading">
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="loading || perfilForm.invalid">
+            <span *ngIf="loading">Guardando...</span>
+            <span *ngIf="!loading">Guardar</span>
+          </button>
+        </div>
+      </form>
+
+      <div class="success-message" *ngIf="success">
+        ✅ {{ success }}
+      </div>
+
+      <div class="error-message" *ngIf="error">
+        ❌ {{ error }}
+      </div>
+    </div>
+
+    <!-- Mis Publicaciones -->
+    <div class="section-card">
+      <h2>Mis Publicaciones</h2>
+      
+      <div class="publicaciones-lista" *ngIf="misPublicaciones.length > 0">
+        <div class="publicacion-item" *ngFor="let publicacion of misPublicaciones">
+          <div class="publicacion-header">
+            <span class="tipo-badge" [ngClass]="'tipo-' + publicacion.tipo">
+              {{ publicacion.tipo }}
+            </span>
+            <span class="fecha">{{ publicacion.fechaCreacion | date:'short' }}</span>
+          </div>
+          <h3 class="publicacion-titulo" [routerLink]="['/publicacion', publicacion.id]">
+            {{ publicacion.titulo }}
+          </h3>
+          <div class="publicacion-stats">
+            <span class="votos">👍 {{ publicacion.votosPositivos }} 👎 {{ publicacion.votosNegativos }}</span>
+            <span class="comentarios">💬 {{ publicacion.totalComentarios }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="empty-state" *ngIf="misPublicaciones.length === 0">
+        <p>Aún no has creado ninguna publicación</p>
+        <button class="btn btn-primary" routerLink="/nueva-publicacion">
+          Crear mi primera publicación
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="perfil-actions">
+    <button class="btn btn-danger" (click)="cerrarSesion()">
+      🚪 Cerrar Sesión
+    </button>
+  </div>
+</div>

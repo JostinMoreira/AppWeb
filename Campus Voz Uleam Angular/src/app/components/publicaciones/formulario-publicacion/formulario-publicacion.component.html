@@ -1,0 +1,90 @@
+<div class="formulario-container">
+  <div class="formulario-card">
+    <h2>{{ esEdicion ? 'Editar Publicación' : 'Nueva Publicación' }}</h2>
+    <p class="formulario-subtitle">Comparte tu voz en Campus Voz</p>
+
+    <!-- Debug info (solo en desarrollo) -->
+    <div class="debug-info" style="background: #f0f0f0; padding: 10px; margin-bottom: 20px; border-radius: 5px; font-size: 12px;">
+      <strong>Debug Info:</strong><br>
+      Usuario autenticado: {{ usuario ? 'Sí' : 'No' }}<br>
+      <span *ngIf="usuario">
+        ID: {{ usuario.id }}<br>
+        Nombre: {{ usuario.nombre }}<br>
+        Email: {{ usuario.email }}
+      </span>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" #publicacionForm="ngForm">
+      <div class="form-group">
+        <label for="titulo">Título *</label>
+        <input
+          type="text"
+          id="titulo"
+          name="titulo"
+          [(ngModel)]="publicacion.titulo"
+          required
+          maxlength="100"
+          class="form-control"
+          placeholder="Escribe un título descriptivo"
+          [disabled]="loading">
+      </div>
+
+      <div class="form-group">
+        <label for="tipo">Tipo de Publicación *</label>
+        <select
+          id="tipo"
+          name="tipo"
+          [(ngModel)]="publicacion.tipo"
+          required
+          class="form-control"
+          [disabled]="loading">
+          <option *ngFor="let tipo of tiposPublicacion" [value]="tipo">
+            {{ getTipoLabel(tipo) }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="contenido">Contenido *</label>
+        <textarea
+          id="contenido"
+          name="contenido"
+          [(ngModel)]="publicacion.contenido"
+          required
+          rows="8"
+          maxlength="2000"
+          class="form-control"
+          placeholder="Describe tu propuesta, queja, sugerencia o idea de manera detallada..."
+          [disabled]="loading"></textarea>
+        <small class="char-counter">
+          {{ publicacion.contenido?.length || 0 }}/2000 caracteres
+        </small>
+      </div>
+
+      <div class="success-message" *ngIf="success">
+        ✅ {{ success }}
+      </div>
+
+      <div class="error-message" *ngIf="error">
+        ❌ {{ error }}
+      </div>
+
+      <div class="form-actions">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="cancelar()"
+          [disabled]="loading">
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="loading || publicacionForm.invalid || !usuario">
+          <span *ngIf="loading">{{ esEdicion ? 'Actualizando...' : 'Publicando...' }}</span>
+          <span *ngIf="!loading">{{ esEdicion ? 'Actualizar' : 'Publicar' }}</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
