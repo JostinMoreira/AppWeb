@@ -73,7 +73,6 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  // Modificar el método para aceptar string
   getTipoLabel(tipo: string): string {
     const labels: { [key: string]: string } = {
       [TipoPublicacion.QUEJA]: 'Quejas',
