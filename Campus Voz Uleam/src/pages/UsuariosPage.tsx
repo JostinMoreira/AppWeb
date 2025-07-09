@@ -4,6 +4,7 @@ import {obtenerUsuarios, crearUsuario, actualizarUsuario, eliminarUsuario as eli
 import UsuarioList from '../components/UsuarioList'
 import UsuarioForm from '../components/UsuarioForm'
 import { useAuth } from '../context/ContextoAutenticacion'
+import BotonVolver from '../components/BotonVolver'
 
 export default function UsuariosPage() {
   const { usuario: authUser } = useAuth()
@@ -63,6 +64,7 @@ const eliminarUsuario = async (id: string) => {
 
   return (
     <div>
+      <BotonVolver />
       <h2>Gestión de Usuarios</h2>
       <button onClick={() => { setMostrarFormulario(true); setUsuarioEditar(null) }}>
         Crear nuevo usuario

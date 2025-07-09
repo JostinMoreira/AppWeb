@@ -30,12 +30,12 @@ export default function Inicio() {
     <div>
       <h2>Bienvenido, {perfil.nombre} ({perfil.rol})</h2>
       <nav style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        <Link to="/perfil">🧑‍💼 Ver / Editar Perfil</Link>
-        <Link to="/notificaciones">🔔 Ver Notificaciones</Link>
+        <Link to="/perfil">Ver / Editar Perfil</Link>
+        <Link to="/notificaciones">Ver Notificaciones</Link>
         {perfil.rol?.toLowerCase() === 'autoridad' && (
           <>
-            <Link to="/usuarios">👥 Gestión de Usuarios</Link>
-            <Link to="/respuestas">📢 Respuestas Institucionales</Link>
+            <Link to="/usuarios">Gestión de Usuarios</Link>
+            <Link to="/respuestas">Respuestas Institucionales</Link>
           </>
         )}
         <button onClick={cerrarSesion}>Cerrar sesión</button>

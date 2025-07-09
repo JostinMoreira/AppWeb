@@ -50,7 +50,6 @@ export const usarAutenticacion = () => {
   if (!contexto) throw new Error('usarAutenticacion debe usarse dentro de ProveedorAutenticacion')
   return contexto
 }
-// ...código existente...
 
 export function useAuth() {
   const contexto = useContext(ContextoAutenticacion)
