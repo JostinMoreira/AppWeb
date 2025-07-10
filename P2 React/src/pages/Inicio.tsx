@@ -28,14 +28,18 @@ export default function Inicio() {
 
   return (
     <div>
+      <h1>Campus Voz Uleam</h1>
       <h2>Bienvenido, {perfil.nombre} ({perfil.rol})</h2>
-      <nav style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        <Link to="/perfil">Ver / Editar Perfil</Link>
-        <Link to="/notificaciones">Ver Notificaciones</Link>
+      <nav style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+        <Link to="/perfil">
+          <button type="button" className="boton-estilizado">Perfil</button>
+        </Link>
+        <Link to="../componentes/Notificaciones">
+          <button type="button" className="boton-estilizado">Notificaciones</button>
+        </Link>
         {perfil.rol?.toLowerCase() === 'autoridad' && (
           <>
-            <Link to="/usuarios">Gestión de Usuarios</Link>
-            <Link to="/respuestas">Respuestas Institucionales</Link>
+            <Link to="/usuarios"> <button type="button" className="boton-estilizado">Gestion Usuarios</button></Link>
           </>
         )}
         <button onClick={cerrarSesion}>Cerrar sesión</button>
