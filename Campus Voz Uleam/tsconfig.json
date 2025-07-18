@@ -1,10 +1,9 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ],
+  "extends": "ts-config-single-spa",
+  "files": ["src/CampusVozUleam-root-config.ts"],
   "compilerOptions": {
-    "jsx": "react-jsx"
-  }
+    "declarationDir": "dist"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["src/**/*.test*"]
 }
