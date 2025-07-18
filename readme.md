@@ -15,3 +15,9 @@ Vistas:
 
 Nombre: Jostin Antonio Moreira Zambrano
 frameworks: Angular
+
+Modulo: Interacción
+- Publicaciones(Crear,Editar, Eliminar, Publicar)
+- Comentarios(Crear comentario en la publicacion, Editar, Eliminar, Publicar)
+- Valoración(Like en la publicacion, Dislike en la publicacion)
+- Notificaciones(para avisar sobre respuestas o reacciones)
