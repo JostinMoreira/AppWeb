@@ -35,7 +35,7 @@ export default function Inicio() {
           <button type="button" className="boton-estilizado">Perfil</button>
         </Link>
         <Link to="../componentes/Notificaciones">
-          <button type="button" className="boton-estilizado">Notificaciones</button>
+          <button type="button" className="boton-estilizado">🔔</button>
         </Link>
         {perfil.rol?.toLowerCase() === 'autoridad' && (
           <>

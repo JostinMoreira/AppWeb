@@ -28,6 +28,7 @@
   <script type="injector-importmap">
     {
       "imports": {
+        "@campus-uleam/root-config": "//localhost:9000/campus-uleam-root-config.js",
         "@single-spa/welcome": "https://cdn.jsdelivr.net/npm/single-spa-welcome/dist/single-spa-welcome.min.js"
       }
     }
@@ -44,7 +45,7 @@
   <main></main>
   <script>
     window.importMapInjector.initPromise.then(() => {
-      import('@CampusVozUleam/root-config');
+      import('@campus-uleam/root-config');
     });
   </script>
   <import-map-overrides-full show-when-local-storage="devtools" dev-libs></import-map-overrides-full>

@@ -1,5 +1,5 @@
 {
-  "name": "@mf-React/MF-React",
+  "name": "@campus-uleam/campus-uleam",
   "scripts": {
     "start": "webpack serve",
     "start:standalone": "webpack serve --env standalone",
@@ -57,5 +57,5 @@
     "@types/react": "^17.0.19",
     "@types/react-dom": "^17.0.9"
   },
-  "types": "dist/mf-React-MF-React.d.ts"
+  "types": "dist/campus-uleam-campus-uleam.d.ts"
 }

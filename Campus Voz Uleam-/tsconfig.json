@@ -1,6 +1,6 @@
 {
   "extends": "ts-config-single-spa",
-  "files": ["src/CampusVozUleam-root-config.ts"],
+  "files": ["src/campus-uleam-root-config.ts"],
   "compilerOptions": {
     "declarationDir": "dist"
   },

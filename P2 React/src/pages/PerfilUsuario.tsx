@@ -35,8 +35,7 @@ export default function PerfilUsuario() {
       <p><strong>Rol:</strong> {perfil.rol}</p>
       {perfil.facultad && <p><strong>Facultad:</strong> {perfil.facultad}</p>}
       {perfil.carrera && <p><strong>Carrera:</strong> {perfil.carrera}</p>}
-      {perfil.rol === 'Estudiante' && perfil.semestre && (
-        <p><strong>Semestre:</strong> {perfil.semestre}</p>
+      {perfil.rol === 'Estudiante' && perfil.semestre && (<p><strong>Semestre:</strong> {perfil.semestre}</p>
       )}
       <button onClick={() => navegar('/editar-perfil')}>Editar perfil</button>
     </div>

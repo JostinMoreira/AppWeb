@@ -3,11 +3,11 @@ const singleSpaDefaults = require("webpack-config-single-spa-react-ts");
 
 module.exports = (webpackConfigEnv, argv) => {
   const defaultConfig = singleSpaDefaults({
-    orgName: "mf-React",
-    projectName: "MF-React",
+    orgName: "campus-uleam",
+    projectName: "campus-uleam",
     webpackConfigEnv,
     argv,
-    outputSystemJS: false,
+    outputSystemJS: true,
   });
 
   return merge(defaultConfig, {
