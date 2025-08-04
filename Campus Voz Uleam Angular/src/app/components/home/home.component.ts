@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { PublicacionesService } from '../../services/publicaciones.service';
 import { AuthService } from '../../services/auth.service';
 import { Usuario } from '../../models/usuario.model';
@@ -17,7 +18,7 @@ interface Estadisticas {
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   estadisticas: Estadisticas = {
     totalPublicaciones: 0,
     totalUsuarios: 0,
@@ -28,6 +29,7 @@ export class HomeComponent implements OnInit {
   
   usuario: Usuario | null = null;
   loading = true;
+  private userSubscription: Subscription | undefined;
   
   // Getter para las claves
   get tiposPublicacion(): string[] {
@@ -39,14 +41,19 @@ export class HomeComponent implements OnInit {
     private authService: AuthService
   ) {}
 
-  async ngOnInit(): Promise<void> {
-    // Obtener usuario actual
-    this.authService.getCurrentUser().subscribe(user => {
+  ngOnInit(): void {
+    // CORREGIDO: Se suscribe a currentUser$ y se añade el tipo al parámetro.
+    this.userSubscription = this.authService.currentUser$.subscribe((user: Usuario | null) => {
       this.usuario = user;
     });
 
     // Cargar estadísticas básicas
-    await this.cargarEstadisticas();
+    this.cargarEstadisticas();
+  }
+
+  ngOnDestroy(): void {
+    // Buena práctica: desuscribirse para evitar fugas de memoria.
+    this.userSubscription?.unsubscribe();
   }
 
   private async cargarEstadisticas(): Promise<void> {

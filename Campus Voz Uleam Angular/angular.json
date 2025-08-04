@@ -15,11 +15,11 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-builders/custom-webpack:browser",
           "options": {
             "outputPath": "dist/campus-voz",
             "index": "src/index.html",
-            "main": "src/main.ts",
+            "main": "src/main.single-spa.ts",
             "polyfills": [
               "zone.js"
             ],
@@ -31,23 +31,29 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "customWebpackConfig": {
+              "path": "extra-webpack.config.js",
+              "libraryName": "campus-voz",
+              "libraryTarget": "umd"
+            },
+            "deployUrl": "http://localhost:4200/"
           },
           "configurations": {
             "production": {
-            "budgets": [
-              {
-                "type": "initial",
-                "maximumWarning": "500kb",
-                "maximumError": "1mb"
-              },
-              {
-                "type": "anyComponentStyle",
-                "maximumWarning": "5kb",
-                "maximumError": "6kb"
-              }
-            ],
-              "outputHashing": "all"
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "5kb",
+                  "maximumError": "6kb"
+                }
+              ],
+              "outputHashing": "none"
             },
             "development": {
               "buildOptimizer": false,
@@ -55,13 +61,14 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "outputHashing": "none"
             }
           },
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular-builders/custom-webpack:dev-server",
           "configurations": {
             "production": {
               "buildTarget": "campus-voz:build:production"
@@ -70,7 +77,12 @@
               "buildTarget": "campus-voz:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "headers": {
+              "Access-Control-Allow-Origin": "*"
+            }
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

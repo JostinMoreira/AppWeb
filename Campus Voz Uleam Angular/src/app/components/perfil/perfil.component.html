@@ -57,7 +57,8 @@
         </div>
       </div>
 
-      <form *ngIf="editando" (ngSubmit)="guardarCambios()" #perfilForm="ngForm">
+      <!-- CORREGIDO: Se elimina (ngSubmit)="guardarCambios()" del formulario -->
+      <form *ngIf="editando" #perfilForm="ngForm">
         <div class="form-group">
           <label for="nombre">Nombre *</label>
           <input
@@ -90,12 +91,12 @@
             [disabled]="loading">
             Cancelar
           </button>
+          <!-- El botón de guardar ahora está deshabilitado ya que la lógica se movió al Shell -->
           <button
             type="submit"
             class="btn btn-primary"
-            [disabled]="loading || perfilForm.invalid">
-            <span *ngIf="loading">Guardando...</span>
-            <span *ngIf="!loading">Guardar</span>
+            [disabled]="true">
+            <span>Guardar</span>
           </button>
         </div>
       </form>
@@ -141,7 +142,8 @@
   </div>
 
   <div class="perfil-actions">
-    <button class="btn btn-danger" (click)="cerrarSesion()">
+    <!-- CORREGIDO: Se elimina (click)="cerrarSesion()" del botón -->
+    <button class="btn btn-danger">
       🚪 Cerrar Sesión
     </button>
   </div>

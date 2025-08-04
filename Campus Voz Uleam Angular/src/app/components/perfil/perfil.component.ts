@@ -34,7 +34,8 @@ export class PerfilComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const userSub = this.authService.getCurrentUser().subscribe((user) => {
+    // CORREGIDO: Se suscribe a currentUser$ y se añade el tipo al parámetro.
+    const userSub = this.authService.currentUser$.subscribe((user: Usuario | null) => {
       this.usuario = user
       if (user) {
         this.datosEdicion = {
@@ -43,7 +44,8 @@ export class PerfilComponent implements OnInit, OnDestroy {
         }
         this.cargarMisPublicaciones()
       } else {
-        this.router.navigate(["/login"])
+        // La redirección ahora es responsabilidad del Shell.
+        // Este componente simplemente no mostrará nada si no hay usuario.
       }
     })
     this.subscriptions.push(userSub)
@@ -88,43 +90,9 @@ export class PerfilComponent implements OnInit, OnDestroy {
     }
   }
 
-  async guardarCambios(): Promise<void> {
-    if (!this.usuario) return
-
-    if (!this.datosEdicion.nombre.trim()) {
-      this.error = "El nombre es obligatorio"
-      return
-    }
-
-    if (!this.datosEdicion.email.trim()) {
-      this.error = "El email es obligatorio"
-      return
-    }
-
-    this.loading = true
-    this.error = ""
-
-    try {
-      await this.authService.actualizarPerfil(this.datosEdicion.nombre.trim(), this.datosEdicion.email.trim())
-
-      this.success = "Perfil actualizado exitosamente"
-      this.editando = false
-      this.loading = false
-    } catch (error) {
-      console.error("Error al actualizar perfil:", error)
-      this.error = "Error al actualizar el perfil"
-      this.loading = false
-    }
-  }
-
-  async cerrarSesion(): Promise<void> {
-    try {
-      await this.authService.logout()
-      this.router.navigate(["/"])
-    } catch (error) {
-      console.error("Error al cerrar sesión:", error)
-    }
-  }
+  // ELIMINADO: La lógica para guardar cambios y cerrar sesión se moverá al Shell.
+  // async guardarCambios(): Promise<void> { ... }
+  // async cerrarSesion(): Promise<void> { ... }
 
   getRolLabel(rol: RolUsuario): string {
     const labels: { [key: string]: string } = {

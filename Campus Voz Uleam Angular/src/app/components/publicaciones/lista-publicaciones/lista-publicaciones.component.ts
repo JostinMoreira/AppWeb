@@ -34,8 +34,8 @@ export class ListaPublicacionesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // Obtener usuario actual
-    const userSub = this.authService.getCurrentUser().subscribe(user => {
+    // CORREGIDO: Se suscribe a currentUser$ y se añade el tipo al parámetro 'user'.
+    const userSub = this.authService.currentUser$.subscribe((user: Usuario | null) => {
       this.usuario = user;
     });
     this.subscriptions.push(userSub);

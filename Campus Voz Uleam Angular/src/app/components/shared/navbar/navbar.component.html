@@ -14,7 +14,8 @@
         📝 Publicaciones
       </a>
       
-      <div *ngIf="usuario; else loginLinks" class="user-menu">
+      <!-- Este menú se muestra si el usuario ha iniciado sesión -->
+      <div *ngIf="usuario; else notLoggedIn" class="user-menu">
         <a routerLink="/nueva-publicacion" class="nav-link btn-primary">
           ➕ Nueva
         </a>
@@ -28,20 +29,17 @@
             <a routerLink="/perfil" class="dropdown-item" (click)="toggleMenu()">
               👤 Mi Perfil
             </a>
-            <button class="dropdown-item logout-btn" (click)="logout()">
+            <!-- El botón de logout ya no tiene un evento click, será manejado por el Shell -->
+            <button class="dropdown-item logout-btn">
               🚪 Cerrar Sesión
             </button>
           </div>
         </div>
       </div>
 
-      <ng-template #loginLinks>
-        <a routerLink="/login" class="nav-link" routerLinkActive="active">
-          🔑 Iniciar Sesión
-        </a>
-        <a routerLink="/register" class="nav-link btn-primary" routerLinkActive="active">
-          📝 Registrarse
-        </a>
+      <!-- Este bloque se muestra si no hay usuario -->
+      <ng-template #notLoggedIn>
+        <!-- Los enlaces de login/register se eliminan porque son responsabilidad del Shell -->
       </ng-template>
     </div>
 

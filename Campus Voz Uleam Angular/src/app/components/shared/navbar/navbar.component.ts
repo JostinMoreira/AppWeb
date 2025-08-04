@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { Usuario } from '../../../models/usuario.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   usuario: Usuario | null = null;
   menuAbierto = false;
+  private userSubscription: Subscription | undefined;
 
   constructor(
     private authService: AuthService,
@@ -18,19 +20,19 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.authService.getCurrentUser().subscribe(user => {
+    // CORREGIDO: Se suscribe a currentUser$ y se añade el tipo al parámetro.
+    this.userSubscription = this.authService.currentUser$.subscribe((user: Usuario | null) => {
       this.usuario = user;
     });
   }
 
-  async logout(): Promise<void> {
-    try {
-      await this.authService.logout();
-      this.router.navigate(['/']);
-    } catch (error) {
-      console.error('Error al cerrar sesión:', error);
-    }
+  ngOnDestroy(): void {
+    // Buena práctica: desuscribirse para evitar fugas de memoria.
+    this.userSubscription?.unsubscribe();
   }
+
+  // ELIMINADO: El método logout() ya no pertenece a este componente.
+  // La acción de cerrar sesión se manejará en el Shell.
 
   toggleMenu(): void {
     this.menuAbierto = !this.menuAbierto;

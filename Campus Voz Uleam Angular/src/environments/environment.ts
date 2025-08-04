@@ -1,11 +1,9 @@
 export const environment = {
-  production: false,
-  firebase: {
-  apiKey: "AIzaSyA7dGDjoKUAK99gFAkgayyvm30qVeatcKs",
-  authDomain: "campus-voz.firebaseapp.com",
-  projectId: "campus-voz",
-  storageBucket: "campus-voz.firebasestorage.app",
-  messagingSenderId: "842660625592",
-  appId: "1:842660625592:web:42583ee2437ac6a807484d"
-  }
+  apiKey: "AIzaSyBOYAmDJ0NIWtUU7lV7_fmFlqNxjZWvInQ",
+  authDomain: "singlespa-a95cd.firebaseapp.com",
+  projectId: "singlespa-a95cd",
+  storageBucket: "singlespa-a95cd.firebasestorage.app",
+  messagingSenderId: "760070798289",
+  appId: "1:760070798289:web:5c03c0ef500fab5fc43ef0",
+  measurementId: "G-HQJ834PPG7"
 };

@@ -87,11 +87,14 @@ export class VotosComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // Suscribirse al usuario actual
-    const userSub = this.authService.getCurrentUser().subscribe((user) => {
+    // CORREGIDO: Se suscribe al observable currentUser$ y se añade el tipo al parámetro 'user'
+    const userSub = this.authService.currentUser$.subscribe((user: Usuario | null) => {
       this.usuario = user
       if (user && this.publicacionId) {
         this.cargarVotoUsuario()
+      } else {
+        // Si el usuario cierra sesión, se limpia el voto local
+        this.votoUsuario = null;
       }
     })
     this.subscriptions.push(userSub)
@@ -119,7 +122,7 @@ export class VotosComponent implements OnInit, OnDestroy {
     try {
       await this.votosService.votar(this.publicacionId, this.usuario.id, tipo)
 
-      // Actualizar contadores localmente
+      // La lógica para actualizar contadores localmente se mantiene igual
       if (this.votoUsuario?.tipo === tipo) {
         // Eliminar voto
         if (tipo === "positivo") {

@@ -1,4 +1,16 @@
-<app-navbar></app-navbar>
-<main class="main-content">
-  <router-outlet></router-outlet>
-</main>
+<ng-container *ngIf="currentUser$ | async as user; else notLoggedIn">
+
+  <app-navbar></app-navbar>
+  <main class="main-content">
+    <p style="padding: 1rem;">Bienvenido, {{ user.nombre }} ({{ user.email }})</p>
+    <router-outlet></router-outlet>
+  </main>
+
+</ng-container>
+
+<ng-template #notLoggedIn>
+  <div style="text-align: center; padding: 50px;">
+    <h2>Módulo de Angular</h2>
+    <p>Por favor, inicie sesión desde la aplicación principal para ver el contenido.</p>
+  </div>
+</ng-template>

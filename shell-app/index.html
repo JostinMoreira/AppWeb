@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shell Principal</title>
+
+    <!-- CORRECCIÓN 1: Añadir Zone.js para Angular -->
+    <script src="https://unpkg.com/zone.js@0.11.4/dist/zone.min.js"></script>
+
+    <!-- Scripts de SystemJS y el Import Map -->
+    <script src="https://unpkg.com/systemjs@6.14.3/dist/s.min.js"></script>
+    <script src="https://unpkg.com/systemjs@6.14.3/dist/extras/amd.min.js"></script>
+    <script type="systemjs-importmap">
+      {
+        "imports": {
+          "react": "https://unpkg.com/react@18.2.0/umd/react.development.js",
+          "react-dom": "https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js",
+          "single-spa": "https://unpkg.com/single-spa@5.9.3/lib/umd/single-spa.min.js",
+
+          "@proyecto/campus-angular": "http://localhost:4200/main.js",
+
+          // CORRECCIÓN 2: Apuntar al archivo correcto que servirá Vite
+          "@proyecto/react-admin": "http://localhost:4201/src/main.single-spa.tsx"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

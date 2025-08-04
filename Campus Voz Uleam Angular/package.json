@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "build:prod": "ng build --configuration production",
-    "deploy": "ng build --configuration production && firebase deploy"
+    "deploy": "ng build --configuration production && firebase deploy",
+    "build:single-spa:campus-voz": "ng build campus-voz --configuration production",
+    "serve:single-spa:campus-voz": "ng s --project campus-voz --disable-host-check --port 4200 --live-reload false"
   },
   "dependencies": {
     "@angular/animations": "^17.0.0",
@@ -20,13 +22,17 @@
     "@angular/router": "^17.0.0",
     "firebase": "^10.14.1",
     "rxjs": "~7.8.0",
+    "single-spa": ">=4.0.0",
+    "single-spa-angular": "^9.2.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.0"
   },
   "devDependencies": {
+    "@angular-builders/custom-webpack": "^17.0.2",
     "@angular-devkit/build-angular": "^17.0.0",
     "@angular/cli": "^17.0.0",
     "@angular/compiler-cli": "^17.0.0",
+    "style-loader": "^3.3.1",
     "typescript": "~5.2.0"
   }
 }

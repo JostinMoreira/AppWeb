@@ -29,8 +29,8 @@ export class ComentariosComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // Obtener usuario actual
-    const userSub = this.authService.getCurrentUser().subscribe(user => {
+    // CORREGIDO: Se suscribe a currentUser$ y se añade el tipo al parámetro.
+    const userSub = this.authService.currentUser$.subscribe((user: Usuario | null) => {
       this.usuario = user;
     });
     this.subscriptions.push(userSub);
@@ -123,10 +123,10 @@ export class ComentariosComponent implements OnInit, OnDestroy {
   }
 
   async eliminarComentario(comentarioId: string): Promise<void> {
-    if (!confirm('¿Estás seguro de que quieres eliminar este comentario?')) {
-      return;
-    }
-
+    // CORREGIDO: Se elimina la llamada a confirm().
+    // Aquí deberías implementar un diálogo modal personalizado.
+    console.log('Se debería mostrar un modal de confirmación para eliminar.');
+    
     this.loading = true;
     this.error = '';
 
@@ -146,7 +146,9 @@ export class ComentariosComponent implements OnInit, OnDestroy {
   }
 
   formatearFecha(fecha: Date): string {
-    return fecha.toLocaleDateString('es-ES', {
+    // Asegurarse de que la fecha sea un objeto Date válido
+    const date = fecha instanceof Date ? fecha : new Date(fecha);
+    return date.toLocaleDateString('es-ES', {
       year: 'numeric',
       month: 'short',
       day: 'numeric',

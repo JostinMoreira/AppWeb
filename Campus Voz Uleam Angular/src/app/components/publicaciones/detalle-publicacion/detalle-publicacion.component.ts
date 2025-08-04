@@ -17,8 +17,8 @@ export class DetallePublicacionComponent implements OnInit, OnDestroy {
   loading = true;
   error = '';
 
-  public esAutor: boolean = false;
-  public esAdmin: boolean = false;
+  public esAutor = false;
+  public esAdmin = false;
 
   private subscriptions: Subscription[] = [];
 
@@ -30,9 +30,11 @@ export class DetallePublicacionComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // Obtener usuario actual
-    const userSub = this.authService.getCurrentUser().subscribe(user => {
+    // CORREGIDO: Se suscribe a currentUser$ para obtener el usuario actual
+    const userSub = this.authService.currentUser$.subscribe((user: Usuario | null) => {
       this.usuario = user;
+      // Una vez que tenemos el usuario, verificamos los permisos si la publicación ya se cargó
+      this.verificarPermisos();
     });
     this.subscriptions.push(userSub);
 
@@ -51,17 +53,15 @@ export class DetallePublicacionComponent implements OnInit, OnDestroy {
   }
 
   private cargarPublicacion(publicacionId: string): void {
+    this.loading = true;
     const publicacionSub = this.publicacionesService
       .obtenerPublicacionPorId(publicacionId)
       .subscribe({
         next: (publicacion) => {
           if (publicacion) {
             this.publicacion = publicacion;
-            console.log('Publicación cargada:', publicacion);
-            // Determinar si el usuario es el autor
-            this.esAutor = !!(this.usuario && this.publicacion && this.usuario.id === this.publicacion.autorId);
-            // Determinar si el usuario es admin (ajusta la lógica según tu modelo)
-            this.esAdmin = !!(this.usuario && this.usuario.rol && this.usuario.rol.toLowerCase() === 'admin');
+            // Una vez que tenemos la publicación, verificamos los permisos
+            this.verificarPermisos();
           } else {
             this.error = 'Publicación no encontrada';
           }
@@ -75,6 +75,16 @@ export class DetallePublicacionComponent implements OnInit, OnDestroy {
       });
     
     this.subscriptions.push(publicacionSub);
+  }
+
+  private verificarPermisos(): void {
+    // Esta función se llama cuando se obtiene el usuario o la publicación,
+    // para asegurar que tengamos ambos datos antes de verificar.
+    if (!this.usuario || !this.publicacion) {
+      return;
+    }
+    this.esAutor = this.usuario.id === this.publicacion.autorId;
+    this.esAdmin = this.usuario.rol?.toLowerCase() === 'admin';
   }
 
   getTipoLabel(tipo: TipoPublicacion): string {
@@ -98,7 +108,7 @@ export class DetallePublicacionComponent implements OnInit, OnDestroy {
   }
 
   formatearFecha(fecha: Date): string {
-    return fecha.toLocaleDateString('es-ES', {
+    return new Date(fecha).toLocaleDateString('es-ES', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
@@ -115,9 +125,12 @@ export class DetallePublicacionComponent implements OnInit, OnDestroy {
   }
 
   async eliminarPublicacion(): Promise<void> {
-    if (!this.publicacion?.id || !confirm('¿Estás seguro de que quieres eliminar esta publicación?')) {
+    if (!this.publicacion?.id) {
       return;
     }
+    
+
+    console.log('Se debería mostrar un modal de confirmación aquí.');
 
     try {
       await this.publicacionesService.eliminarPublicacion(this.publicacion.id);
